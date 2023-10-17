@@ -1,6 +1,11 @@
 {
-  "caption": {
+  "caption_vedio": {
     "text": "**💾 𝐅𝐢𝐥𝐞 𝐍𝐚𝐦𝐞 : ** `{file_name}`\n\n**📦 𝐅𝐢𝐥𝐞 𝐒𝐢𝐳𝐞 :** `{file_size_mb:.2f} MB`\n**⚙️ 𝐐𝐮𝐚𝐥𝐢𝐭𝐲 : ** `{height}p`",
+    "mode": "MARKDOWN",
+    "description": "A caption template showing basic file information and only support formatting in markdown."
+  },
+  "caption_file": {
+    "text": "**💾 𝐅𝐢𝐥𝐞 𝐍𝐚𝐦𝐞 : ** `{file_name}`\n\n**📦 𝐅𝐢𝐥𝐞 𝐒𝐢𝐳𝐞 :** `{file_size_mb:.2f} MB`",
     "mode": "MARKDOWN",
     "description": "A caption template showing basic file information and only support formatting in markdown."
   }
