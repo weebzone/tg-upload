@@ -739,9 +739,8 @@ with client:
           print(f"\nAn error occured!\n{error_code}")
       elif Path(args.path).is_dir():
         print("discovering paths...")
-	file_list = list(Path(args.path).glob("**/*")) if args.recursive else list(Path(args.path).glob("*"))
-	sorted_file_list = sorted(file_list, key=lambda x: x.name)
-        for _path in sorted_file_list:
+	folder_path = Path(args.path)
+        for _path in sorted(folder_path.glob("**/*")) if args.recursive else sorted(folder_path.glob("*")):
           if Path(_path).is_file():
             try:
               filename = PurePath(_path).name
