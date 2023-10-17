@@ -739,38 +739,37 @@ with client:
           print(f"\nAn error occured!\n{error_code}")
       elif Path(args.path).is_dir():
         print("discovering paths...")
-	folder_path = Path(args.path)
+        folder_path = Path(args.path)
         for _path in sorted(folder_path.glob("**/*")) if args.recursive else sorted(folder_path.glob("*")):
-          if Path(_path).is_file():
-            try:
-              filename = PurePath(_path).name
-              if args.prefix:
-                filename = args.prefix + filename
-              if args.replace:
-                filename = filename.replace(args.replace[0], args.replace[1])
-              file_size, file_sha256, file_md5, creation_time, modification_time = file_info(_path, caption)
-              with VideoFileClip(str(_path)) as video:
-                Path(args.thumb_dir).mkdir(exist_ok=True)
-                if args.thumb == 'auto':
-                  thumb_path = f"thumb/THUMB_{PurePath(_path).stem}.jpg"
-                  video.save_frame(thumb_path, t=floor(video.duration / 2))
-                elif args.thumb != None and args.thumb.isdigit():
-                  video.save_frame(f"thumb/THUMB_{PurePath(_path).stem}.jpg", t=int(args.thumb))
-                  thumb_path = f"thumb/THUMB_{PurePath(_path).stem}.jpg"
-                if not args.height:
-                  media_height = video.h
-                if not args.width:
-                  media_width = video.w
-                if args.duration == -1:
-                  media_duration = floor(video.duration)
-              start_time = time()
-              client.send_video(chat_id, _path, progress=upload_progress, duration=media_duration, parse_mode=parse_mode, caption=caption.format(file_name = PurePath(filename).stem, file_format = PurePath(filename).suffix, file_size_b = file_size, file_size_kb = file_size / 1024, file_size_mb = file_size / (1024 * 1024), file_size_gb = file_size / (1024 * 1024 * 1024), file_sha256 = file_sha256, file_md5 = file_md5, creation_time = creation_time, modification_time = modification_time, width=media_width, height=media_height, duration=media_duration, path = PurePath(_path)), has_spoiler=args.spoiler, width=int(media_width), height=int(media_height), thumb=thumb_path, file_name=filename, supports_streaming=args.disable_stream, disable_notification=args.silent, ttl_seconds=args.self_destruct, protect_content=args.protect, reply_to_message_id=args.reply_to)
-              Path(_path).unlink(missing_ok=True) if args.delete_on_done else None
-            except Exception as error_code:
-              print(f"\nAn error occured!\n{error_code}")
-          else:
-            print(f"[Dir] -> {PurePath(_path).name}")
-      else:
+            if Path(_path).is_file():
+              try:
+                filename = PurePath(_path).name
+                if args.prefix:
+                  filename = args.prefix + filename
+                if args.replace:
+                  filename = filename.replace(args.replace[0], args.replace[1])
+                file_size, file_sha256, file_md5, creation_time, modification_time = file_info(_path, caption)
+                with VideoFileClip(str(_path)) as video:
+                  Path(args.thumb_dir).mkdir(exist_ok=True)
+                  if args.thumb == 'auto':
+                    thumb_path = f"thumb/THUMB_{PurePath(_path).stem}.jpg"
+                    video.save_frame(thumb_path, t=floor(video.duration / 2))
+                  elif args.thumb != None and args.thumb.isdigit():
+                    video.save_frame(f"thumb/THUMB_{PurePath(_path).stem}.jpg", t=int(args.thumb))
+                    thumb_path = f"thumb/THUMB_{PurePath(_path).stem}.jpg"
+                  if not args.height:
+                    media_height = video.h
+                  if not args.width:
+                    media_width = video.w
+                  if args.duration == -1:
+                    media_duration = floor(video.duration)
+                start_time = time()
+                client.send_video(chat_id, _path, progress=upload_progress, duration=media_duration, parse_mode=parse_mode, caption=caption.format(file_name = PurePath(filename).stem, file_format = PurePath(filename).suffix, file_size_b = file_size, file_size_kb = file_size / 1024, file_size_mb = file_size / (1024 * 1024), file_size_gb = file_size / (1024 * 1024 * 1024), file_sha256 = file_sha256, file_md5 = file_md5, creation_time = creation_time, modification_time = modification_time, width=media_width, height=media_height, duration=media_duration, path = PurePath(_path)), has_spoiler=args.spoiler, width=int(media_width), height=int(media_height), thumb=thumb_path, file_name=filename, supports_streaming=args.disable_stream, disable_notification=args.silent, ttl_seconds=args.self_destruct, protect_content=args.protect, reply_to_message_id=args.reply_to)
+                Path(_path).unlink(missing_ok=True) if args.delete_on_done else None
+              except Exception as error_code:
+                print(f"\nAn error occured!\n{error_code}")
+            else:
+              print(f"[Dir] -> {PurePath(_path).name}")
         print("Error: Given path is invalid.")
 
     elif args.as_audio:
